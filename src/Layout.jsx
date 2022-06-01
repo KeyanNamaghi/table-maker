@@ -36,7 +36,7 @@ export default class BasicLayout extends React.PureComponent {
     return _.map(_.range(this.props.items), function (i) {
       return (
         <div key={i}>
-          <img key={i} src={images[i]} />
+          <img key={i} src={images[i]} alt='' />
         </div>
       )
     })
@@ -44,7 +44,7 @@ export default class BasicLayout extends React.PureComponent {
 
   generateLayout() {
     const p = this.props
-    return _.map(new Array(p.items), function (item, i) {
+    return _.map(new Array(p.items), function (_item, i) {
       const y = _.result(p, 'y') || 10
       return {
         x: i % 2,

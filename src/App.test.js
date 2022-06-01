@@ -1,12 +1,4 @@
-import { render, screen } from '@testing-library/react'
 import LayoutToHTML from './LayoutToHTML'
-
-// const exampleLayout = [
-//   { w: 1, h: 10, x: 0, y: 0, i: '0' },
-//   { w: 1, h: 10, x: 1, y: 10, i: '1' },
-//   { w: 1, h: 10, x: 1, y: 0, i: '2' },
-//   { w: 1, h: 10, x: 0, y: 10, i: '3' },
-// ]
 
 const exampleLayout = [
   { w: 1, h: 10, x: 0, y: 10, i: '0' },
