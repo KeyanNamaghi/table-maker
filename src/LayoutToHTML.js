@@ -3,7 +3,7 @@ const outputHeader = (header) => {
 }
 
 const outputCell = (i, images) => {
-  return `<td><img src='${images[i]}' /></td>`
+  return `<td><img src='${images[i]}'/></td>`
 }
 
 const outputRow = (rowData, images) => {
@@ -11,7 +11,7 @@ const outputRow = (rowData, images) => {
 }
 
 const LayoutToHTML = (layout, images, headers = ['Before', 'After']) => {
-  console.log({ layout, images })
+  //   console.log({ layout, images })
   const structuredData = []
 
   layout.forEach(({ x, y, i }) => {
@@ -23,7 +23,7 @@ const LayoutToHTML = (layout, images, headers = ['Before', 'After']) => {
     }
   })
 
-  console.log({ structuredData })
+  //   console.log({ structuredData })
 
   return `
     <table>
