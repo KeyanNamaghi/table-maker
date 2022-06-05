@@ -25,7 +25,6 @@ const generateTiles = ({ images }) => {
     )
   })
 
-  console.log({ tiles })
   return tiles
 }
 

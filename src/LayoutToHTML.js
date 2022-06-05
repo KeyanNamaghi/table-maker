@@ -11,7 +11,6 @@ const outputRow = (rowData, images) => {
 }
 
 const LayoutToHTML = (layout, images, headers = ['Before', 'After']) => {
-  //   console.log({ layout, images })
   const structuredData = []
 
   layout.forEach(({ x, y, i }) => {
@@ -22,8 +21,6 @@ const LayoutToHTML = (layout, images, headers = ['Before', 'After']) => {
       structuredData[y / 10][x] = Number(i)
     }
   })
-
-  //   console.log({ structuredData })
 
   return `
     <table>
