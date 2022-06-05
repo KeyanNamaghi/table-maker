@@ -1,4 +1,4 @@
-import ImgToMarkdown from './imgToMarkdown'
+import ImgToMarkdown from './ImgToMarkdown'
 import LayoutToHTML from './LayoutToHTML'
 
 const exampleLayout = [
