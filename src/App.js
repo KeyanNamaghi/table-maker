@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Header from './Header'
 import Grid from './Grid'
 import ImgToMarkdown from './ImgToMarkdown'
 import './App.css'
@@ -22,6 +23,7 @@ const formatText = (str) => {
 function App() {
   const [text, setText] = useState(defaultText)
   const [output, setOutput] = useState(null)
+  const [columns, setColumns] = useState(2)
 
   const handleChange = (e) => {
     setText(e.target.value)
@@ -31,16 +33,19 @@ function App() {
     <div className='App'>
       <header className='App-header'>
         {/* <BasicLayout /> */}
-        <Grid images={formatText(text)} setOutput={setOutput} />
-        <textarea onChange={handleChange} value={text} />
+        <Header columns={columns} setColumns={setColumns} />
+        <Grid images={formatText(text)} setOutput={setOutput} cols={columns} />
+        <div className='body-content'>
+          <textarea onChange={handleChange} value={text} />
 
-        <h2 className='html-table-heading'>HTML Output</h2>
-        <button
-          onClick={() => {
-            navigator.clipboard.writeText(output)
-          }}>
-          Copy generated HTML table to clipboard
-        </button>
+          <h2 className='html-table-heading'>HTML Output</h2>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(output)
+            }}>
+            Copy generated HTML table to clipboard
+          </button>
+        </div>
         {/* <div className='html-table' dangerouslySetInnerHTML={{ __html: output }} /> */}
       </header>
     </div>

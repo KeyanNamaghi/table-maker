@@ -20,7 +20,7 @@ const generateTiles = ({ images }) => {
   const tiles = images.map((image, i) => {
     return (
       <div key={i}>
-        <img key={i} src={image} alt='' />
+        <img key={i} src={image} alt='' draggable='false' />
       </div>
     )
   })
@@ -28,7 +28,7 @@ const generateTiles = ({ images }) => {
   return tiles
 }
 
-const Grid = ({ images, setOutput }) => {
+const Grid = ({ images, setOutput, cols = 2 }) => {
   const layout = generateLayout(images)
 
   const layoutChangeHandler = (layout) => {
@@ -39,7 +39,7 @@ const Grid = ({ images, setOutput }) => {
     <ReactGridLayout
       layout={layout}
       onLayoutChange={layoutChangeHandler}
-      cols={2}
+      cols={cols}
       rowHeight={10}
       width={1000}
       items={images.length}>
