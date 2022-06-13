@@ -22,11 +22,15 @@ const LayoutToHTML = (layout, images, headers = ['Before', 'After']) => {
     }
   })
 
-  return `
-    <table>
-        <tr>${headers.map((header) => outputHeader(header)).join('')}</tr>
-        ${structuredData.map((x) => outputRow(x, images)).join('')}
-    </table>`
+  const table = `
+  <table>
+    <tr>${headers.map((header) => outputHeader(header)).join('')}</tr>
+    ${structuredData.map((x) => outputRow(x, images)).join('')}
+  </table>
+  `
+
+  // remove whitespace
+  return table.replace(/\s+/g, ' ').trim()
 }
 
 export default LayoutToHTML
