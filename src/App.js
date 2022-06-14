@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Header from './Header'
+import Controls from './Controls'
 import Grid from './Grid'
 import ImgToMarkdown from './ImgToMarkdown'
 import './App.css'
@@ -33,11 +33,11 @@ function App() {
     <div className='App'>
       <header className='App-header'>
         {/* <BasicLayout /> */}
-        <Header columns={columns} setColumns={setColumns} />
         <Grid images={formatText(text)} setOutput={setOutput} cols={columns} />
         <div className='body-content'>
           <textarea onChange={handleChange} value={text} />
 
+          <Controls columns={columns} setColumns={setColumns} />
           <h2 className='html-table-heading'>HTML Output</h2>
           <button
             onClick={() => {

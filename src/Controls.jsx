@@ -1,6 +1,6 @@
-const Header = ({ columns, setColumns }) => {
+const Controls = ({ columns, setColumns }) => {
   return (
-    <div className='header'>
+    <div className='controls'>
       <button onClick={() => setColumns(columns - 1)}>-</button>
       {columns}
       <button onClick={() => setColumns(columns + 1)}>+</button>
@@ -8,4 +8,4 @@ const Header = ({ columns, setColumns }) => {
   )
 }
 
-export default Header
+export default Controls

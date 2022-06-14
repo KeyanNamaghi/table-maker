@@ -157,13 +157,11 @@ button:hover {
 button:active {
   background-color: #b80202;
 }
-.header {
-  position: absolute;
-  margin-top: -50px;
+.controls {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.header button {
+.controls button {
   margin: 0;
 }
