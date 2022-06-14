@@ -1,13 +1,42 @@
+.font-bold {
+  font-family: 'Roboto', sans-serif !important;
+  font-weight: 600;
+}
+
+.font {
+  font-family: 'Roboto', sans-serif !important;
+  font-weight: 400;
+}
+
 .body-content {
   padding: 20px;
 }
 #content {
   width: 100%;
 }
+.react-grid-layout-container {
+  display: grid;
+  background: #eee;
+}
 .react-grid-layout-wrapper {
   position: relative;
-  background: #eee;
-  margin: 50px;
+  grid-area: 2 / 2 / 12 / 12;
+}
+.react-grid-layout-column-headings {
+  grid-area: 1 / 2 / 2 / 12;
+  display: flex;
+}
+.react-grid-layout-column-headings textarea {
+  flex: auto;
+  border: none;
+  background-color: unset;
+  text-align: center;
+  margin: 1rem 10px 0px;
+  font-size: large;
+  resize: none;
+}
+.react-grid-layout-row-headings {
+  grid-area: 2 / 1 / 12 / 2;
 }
 .react-grid-layout {
 }
@@ -126,7 +155,7 @@
   width: 100%;
   height: auto;
 }
-textarea {
+.github-textarea {
   margin-bottom: 30px;
   width: 100%;
   height: 100px;
@@ -146,8 +175,6 @@ button {
   border-radius: 1em;
   box-sizing: border-box;
   text-decoration: none;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 600;
   background-color: #f14e4e;
   color: #ffffff;
   text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);

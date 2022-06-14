@@ -23,7 +23,7 @@ const formatText = (str) => {
 function App() {
   const [text, setText] = useState(defaultText)
   const [output, setOutput] = useState(null)
-  const [columns, setColumns] = useState(2)
+  const [columns, setColumns] = useState(['Before', 'After'])
 
   const handleChange = (e) => {
     setText(e.target.value)
@@ -35,14 +35,15 @@ function App() {
         {/* <BasicLayout /> */}
         <Grid images={formatText(text)} setOutput={setOutput} cols={columns} />
         <div className='body-content'>
-          <textarea onChange={handleChange} value={text} />
+          <textarea className='github-textarea' onChange={handleChange} value={text} />
 
           <Controls columns={columns} setColumns={setColumns} />
           <h2 className='html-table-heading'>HTML Output</h2>
           <button
             onClick={() => {
               navigator.clipboard.writeText(output)
-            }}>
+            }}
+            className='font-bold'>
             Copy generated HTML table to clipboard
           </button>
         </div>
