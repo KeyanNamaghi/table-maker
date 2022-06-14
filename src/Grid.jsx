@@ -36,15 +36,17 @@ const Grid = ({ images, setOutput, cols = 2 }) => {
   }
 
   return (
-    <ReactGridLayout
-      layout={layout}
-      onLayoutChange={layoutChangeHandler}
-      cols={cols}
-      rowHeight={10}
-      width={1000}
-      items={images.length}>
-      {generateTiles({ images })}
-    </ReactGridLayout>
+    <div className='react-grid-layout-wrapper'>
+      <ReactGridLayout
+        layout={layout}
+        onLayoutChange={layoutChangeHandler}
+        cols={cols}
+        rowHeight={10}
+        width={1000}
+        items={images.length}>
+        {generateTiles({ images })}
+      </ReactGridLayout>
+    </div>
   )
 }
 
