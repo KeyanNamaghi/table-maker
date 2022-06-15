@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useEffect } from 'react'
 import RGL, { WidthProvider } from 'react-grid-layout'
+import useResizeObserver from '@react-hook/resize-observer'
 import LayoutToHTML from './LayoutToHTML'
 
 const ReactGridLayout = WidthProvider(RGL)
@@ -38,8 +39,35 @@ const ColumnHeadings = ({ cols }) => {
   return headings
 }
 
-const Grid = ({ images, setOutput, cols }) => {
+const RowHeadings = ({ rows }) => {
+  const headings = []
+  for (let i = 0; i < rows.length; i++) {
+    headings.push(
+      <div>
+        <textarea className='font-bold' value={rows[i]} />
+      </div>,
+    )
+  }
+
+  return headings
+}
+
+const useSize = (target) => {
+  const [size, setSize] = React.useState()
+
+  React.useLayoutEffect(() => {
+    setSize(target.current.getBoundingClientRect())
+  }, [target])
+
+  // Where the magic happens
+  useResizeObserver(target, (entry) => setSize(entry.contentRect))
+  return size
+}
+
+const Grid = ({ images, setOutput, cols, rows, setRows }) => {
   const layout = generateLayout(images)
+  const ref = useRef()
+  const size = useSize(ref)
 
   const layoutChangeHandler = (layout) => {
     setOutput(LayoutToHTML(layout, images))
@@ -52,13 +80,29 @@ const Grid = ({ images, setOutput, cols }) => {
     }, 0)
   }, [cols])
 
+  // listen to changes in the height of div with className react-grid-layout-wrapper
+  useEffect(() => {
+    console.log({ size })
+    const numberOfRows = (size?.height - 10) / 200
+    const newRows = [...rows].slice(0, numberOfRows)
+
+    while (newRows.length < numberOfRows) {
+      newRows.push('')
+    }
+
+    console.log({ newRows })
+    setRows(newRows)
+  }, [size])
+
   return (
     <div className='react-grid-layout-container'>
       <div className='react-grid-layout-column-headings'>
         <ColumnHeadings cols={cols} />
       </div>
-      <div className='react-grid-layout-row-headings'>Row Headings</div>
-      <div className='react-grid-layout-wrapper'>
+      <div className='react-grid-layout-row-headings'>
+        <RowHeadings rows={rows} />
+      </div>
+      <div className='react-grid-layout-wrapper' ref={ref}>
         <ReactGridLayout
           layout={layout}
           onLayoutChange={layoutChangeHandler}

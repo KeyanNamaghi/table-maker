@@ -20,23 +20,39 @@
 }
 .react-grid-layout-wrapper {
   position: relative;
-  grid-area: 2 / 2 / 12 / 12;
+  grid-area: 2 / 2 / 6 / 6;
 }
 .react-grid-layout-column-headings {
-  grid-area: 1 / 2 / 2 / 12;
+  grid-area: 1 / 2 / 2 / 6;
   display: flex;
 }
-.react-grid-layout-column-headings textarea {
+.react-grid-layout-container textarea {
   flex: auto;
   border: none;
   background-color: unset;
   text-align: center;
-  margin: 1rem 10px 0px;
   font-size: large;
   resize: none;
 }
+.react-grid-layout-column-headings textarea {
+  margin: 1rem 10px 0px;
+}
 .react-grid-layout-row-headings {
-  grid-area: 2 / 1 / 12 / 2;
+  grid-area: 2 / 1 / 6 / 2;
+  display: flex;
+  flex-direction: column;
+}
+.react-grid-layout-row-headings div {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  flex: auto;
+}
+.react-grid-layout-row-headings textarea {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .react-grid-layout {
 }

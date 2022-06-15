@@ -24,6 +24,7 @@ function App() {
   const [text, setText] = useState(defaultText)
   const [output, setOutput] = useState(null)
   const [columns, setColumns] = useState(['Before', 'After'])
+  const [rows, setRows] = useState(['1', '2'])
 
   const handleChange = (e) => {
     setText(e.target.value)
@@ -33,7 +34,7 @@ function App() {
     <div className='App'>
       <header className='App-header'>
         {/* <BasicLayout /> */}
-        <Grid images={formatText(text)} setOutput={setOutput} cols={columns} />
+        <Grid images={formatText(text)} setOutput={setOutput} cols={columns} rows={rows} setRows={setRows} />
         <div className='body-content'>
           <textarea className='github-textarea' onChange={handleChange} value={text} />
 
