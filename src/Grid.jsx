@@ -43,7 +43,7 @@ const RowHeadings = ({ rows }) => {
   const headings = []
   for (let i = 0; i < rows.length; i++) {
     headings.push(
-      <div>
+      <div key={`heading-${i}`}>
         <textarea className='font-bold' value={rows[i]} />
       </div>,
     )
@@ -56,11 +56,11 @@ const useSize = (target) => {
   const [size, setSize] = React.useState()
 
   React.useLayoutEffect(() => {
-    setSize(target.current.getBoundingClientRect())
+    setSize(target.current.children[0].getBoundingClientRect())
   }, [target])
 
   // Where the magic happens
-  useResizeObserver(target, (entry) => setSize(entry.contentRect))
+  useResizeObserver(target?.current?.children[0], (entry) => setSize(entry.contentRect))
   return size
 }
 
@@ -82,17 +82,15 @@ const Grid = ({ images, setOutput, cols, rows, setRows }) => {
 
   // listen to changes in the height of div with className react-grid-layout-wrapper
   useEffect(() => {
-    console.log({ size })
     const numberOfRows = (size?.height - 10) / 200
     const newRows = [...rows].slice(0, numberOfRows)
 
     while (newRows.length < numberOfRows) {
-      newRows.push('')
+      newRows.push('Row')
     }
 
-    console.log({ newRows })
     setRows(newRows)
-  }, [size])
+  }, [size, cols])
 
   return (
     <div className='react-grid-layout-container'>
