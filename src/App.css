@@ -30,10 +30,14 @@
 .react-grid-layout-wrapper {
   position: relative;
   grid-area: 2 / 2 / 6 / 6;
+  margin-right: 50px;
 }
 .react-grid-layout-column-headings {
   grid-area: 1 / 2 / 2 / 6;
   display: flex;
+  position: relative;
+  margin-top: 50px;
+  margin-right: 50px;
 }
 .react-grid-layout-container textarea {
   flex: auto;
@@ -193,13 +197,11 @@
   background-color: #f8f8f8;
   resize: none;
 }
-button {
+.button {
   width: 100%;
   display: inline-block;
   padding: 1em 1.2em;
-  margin: 20px 0;
   border: 0.16em solid rgba(255, 255, 255, 0);
-  border-radius: 1em;
   box-sizing: border-box;
   text-decoration: none;
   background-color: #f14e4e;
@@ -208,22 +210,43 @@ button {
   text-align: center;
   transition: all 0.2s;
 }
-button:hover {
+.button:hover {
   background-color: #eb1616;
 }
-button:active {
+.button:active {
   background-color: #b80202;
 }
 .controls {
+  position: fixed;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 30px;
+  background-color: #f14e4e;
+  color: #ffffff;
+  border-radius: 10px;
+  width: fit-content;
 }
 .controls button {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 20%;
+  background: inherit;
+  color: inherit;
+  margin: 5px;
 }
+.controls button:hover {
+  background-color: #b80202;
+}
+
 .controls span {
   flex-shrink: 0;
+}
+
+.copy-clipboard {
+  position: absolute;
 }

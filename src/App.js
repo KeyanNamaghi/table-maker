@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Controls from './Controls'
 import Grid from './Grid'
 import ImgToMarkdown from './ImgToMarkdown'
 import './App.css'
@@ -22,8 +21,6 @@ const formatText = (str) => {
 
 function App() {
   const [text, setText] = useState(defaultText)
-  const [output, setOutput] = useState(null)
-  const [columns, setColumns] = useState(['Before', 'After'])
   const [rows, setRows] = useState(['1', '2'])
 
   const handleChange = (e) => {
@@ -33,22 +30,10 @@ function App() {
   return (
     <div className='App'>
       <header className='App-header'>
-        {/* <BasicLayout /> */}
-        <Grid images={formatText(text)} setOutput={setOutput} cols={columns} rows={rows} setRows={setRows} />
+        <Grid images={formatText(text)} rows={rows} setRows={setRows} />
         <div className='body-content'>
           <textarea className='github-textarea' onChange={handleChange} value={text} />
-
-          <Controls columns={columns} setColumns={setColumns} />
-          <h2 className='html-table-heading'>HTML Output</h2>
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(output)
-            }}
-            className='font-bold'>
-            Copy generated HTML table to clipboard
-          </button>
         </div>
-        {/* <div className='html-table' dangerouslySetInnerHTML={{ __html: output }} /> */}
       </header>
     </div>
   )

@@ -1,8 +1,10 @@
-import React, { useRef } from 'react'
+import React, { useRef, useLayoutEffect, useReducer, useState } from 'react'
 import { useEffect } from 'react'
 import RGL, { WidthProvider } from 'react-grid-layout'
 import useResizeObserver from '@react-hook/resize-observer'
 import LayoutToHTML from './LayoutToHTML'
+import { ColumnHeadings } from './ColumnHeading'
+import { RowHeadings } from './RowHeading'
 
 const ReactGridLayout = WidthProvider(RGL)
 
@@ -30,32 +32,10 @@ const generateTiles = ({ images }) => {
   return tiles
 }
 
-const ColumnHeadings = ({ cols }) => {
-  const headings = []
-  for (let i = 0; i < cols.length; i++) {
-    headings.push(<textarea className='font-bold' rows={1} value={cols[i]} />)
-  }
-
-  return headings
-}
-
-const RowHeadings = ({ rows }) => {
-  const headings = []
-  for (let i = 0; i < rows.length; i++) {
-    headings.push(
-      <div key={`heading-${i}`}>
-        <textarea className='font-bold' value={rows[i]} />
-      </div>,
-    )
-  }
-
-  return headings
-}
-
 const useSize = (target) => {
   const [size, setSize] = React.useState()
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     setSize(target.current.children[0].getBoundingClientRect())
   }, [target])
 
@@ -64,53 +44,70 @@ const useSize = (target) => {
   return size
 }
 
-const Grid = ({ images, setOutput, cols, rows, setRows }) => {
+const Grid = ({ images, rows, setRows }) => {
+  const [output, setOutput] = useState(null)
   const layout = generateLayout(images)
   const ref = useRef()
   const size = useSize(ref)
 
+  // Setup a useReducer to handle the state of the headings
+  const [headings, dispatch] = useReducer(
+    (state, action) => {
+      switch (action.type) {
+        case 'add':
+          return [...state, action.payload.number === 1 ? 'After' : 'Heading']
+        case 'remove':
+          if (state.length <= 2) return state
+          return state.slice(0, state.length - 1)
+        case 'update':
+          return state.map((heading, index) => {
+            if (index === action.payload.index) {
+              return action.payload.value
+            }
+            return heading
+          })
+        default:
+          return state
+      }
+    },
+    ['Before', 'After'],
+  )
+
   const layoutChangeHandler = (layout) => {
-    setOutput(LayoutToHTML(layout, images))
+    setOutput(LayoutToHTML({ layout, images, headers: headings }))
   }
 
-  // Trigger ReactGridLayout to re-render when the columns array changes
   useEffect(() => {
-    setTimeout(() => {
-      window.dispatchEvent(new Event('resize'))
-    }, 0)
-  }, [cols])
-
-  // listen to changes in the height of div with className react-grid-layout-wrapper
-  useEffect(() => {
-    const numberOfRows = (size?.height - 10) / 200
-    const newRows = [...rows].slice(0, numberOfRows)
-
-    while (newRows.length < numberOfRows) {
-      newRows.push('Row')
-    }
-
-    setRows(newRows)
-  }, [size, cols])
+    setOutput(LayoutToHTML({ layout, images, headers: headings }))
+  }, [headings])
 
   return (
     <div className='react-grid-layout-container'>
-      <div className='react-grid-layout-column-headings'>
-        <ColumnHeadings cols={cols} />
-      </div>
-      <div className='react-grid-layout-row-headings'>
-        <RowHeadings rows={rows} />
-      </div>
+      <ColumnHeadings headings={headings} dispatch={dispatch} />
+      <RowHeadings rows={rows} size={size} />
       <div className='react-grid-layout-wrapper' ref={ref}>
         <ReactGridLayout
           layout={layout}
           onLayoutChange={layoutChangeHandler}
-          cols={cols.length}
+          cols={headings.length}
           rowHeight={10}
           width={1000}
           items={images.length}>
           {generateTiles({ images })}
         </ReactGridLayout>
       </div>
+      <div className='controls'>
+        <button onClick={() => dispatch({ type: 'remove', payload: { number: headings.length } })}>&lt;</button>
+        <span>Number of columns: {headings.length}</span>
+        <button onClick={() => dispatch({ type: 'add', payload: { number: headings.length } })}>&gt;</button>
+      </div>
+      <button
+        onClick={() => {
+          navigator.clipboard.writeText(output)
+        }}
+        className='font-bold button copy-clipboard'>
+        Copy generated HTML table to clipboard
+      </button>
     </div>
   )
 }

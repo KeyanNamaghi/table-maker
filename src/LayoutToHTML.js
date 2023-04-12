@@ -10,7 +10,8 @@ const outputRow = (rowData, images) => {
   return `<tr>${rowData.map((x) => outputCell(x, images)).join('')}</tr>`
 }
 
-const LayoutToHTML = (layout, images, headers = ['Before', 'After']) => {
+const LayoutToHTML = ({ layout, images, headers = ['Before', 'After'] }) => {
+  console.log({ headers })
   const structuredData = []
 
   layout.forEach(({ x, y, i }) => {
@@ -22,12 +23,8 @@ const LayoutToHTML = (layout, images, headers = ['Before', 'After']) => {
     }
   })
 
-  const table = `
-  <table>
-    <tr>${headers.map((header) => outputHeader(header)).join('')}</tr>
-    ${structuredData.map((x) => outputRow(x, images)).join('')}
-  </table>
-  `
+  // prettier-ignore
+  const table = `<table><tr>${headers.map((header) => outputHeader(header)).join('')}</tr>${structuredData.map((x) => outputRow(x, images)).join('')}</table>`
 
   // remove whitespace
   return table.replace(/\s+/g, ' ').trim()
